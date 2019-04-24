@@ -1889,32 +1889,57 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['module'],
   name: "post-index",
   component: {},
   data: function data() {
     return {
-      items: []
+      editMode: false,
+      pagination: [],
+      fields: [{
+        key: 'title',
+        label: 'Título'
+      }, {
+        key: 'contents',
+        label: 'Contenido'
+      }, {
+        key: 'actions',
+        label: 'Accciones'
+      }]
     };
   },
   mounted: function mounted() {
-    var _this = this;
-
-    axios.get(this.module).then(function (response) {
-      _this.items = response.data.data;
-
-      _this.items.forEach(function (item) {
-        item.actions = '';
-      });
-    });
+    this.getItems();
   },
   methods: {
     edit: function edit(id) {
+      this.editMode = true;
       console.log(id);
     },
     destroy: function destroy(id) {
       console.log(id);
+      this.getItems();
+    },
+    save: function save() {
+      this.editMode = false;
+    },
+    getItems: function getItems() {
+      var _this = this;
+
+      axios.get(this.module).then(function (response) {
+        _this.pagination = response.data;
+      });
     }
   }
 });
@@ -65739,23 +65764,51 @@ var render = function() {
   return _c(
     "b-container",
     [
-      _c("h3", [_vm._v("\n        holi soy el index post\n    ")]),
+      !_vm.editMode
+        ? _c("b-table", {
+            attrs: {
+              striped: "",
+              hover: "",
+              small: "",
+              items: _vm.pagination.data,
+              fields: _vm.fields,
+              id: "module"
+            },
+            scopedSlots: _vm._u(
+              [
+                {
+                  key: "actions",
+                  fn: function(row) {
+                    return [
+                      _c("table-actions", {
+                        attrs: { item: row.item },
+                        on: { edit: _vm.edit, destroy: _vm.destroy }
+                      })
+                    ]
+                  }
+                }
+              ],
+              null,
+              false,
+              2845435912
+            )
+          })
+        : _vm._e(),
       _vm._v(" "),
-      _c("b-table", {
-        attrs: { striped: "", hover: "", small: "", items: _vm.items },
-        scopedSlots: _vm._u([
-          {
-            key: "actions",
-            fn: function(row) {
-              return [
-                _c("table-actions", {
-                  attrs: { item: row.item },
-                  on: { edit: _vm.edit, destroy: _vm.destroy }
-                })
-              ]
-            }
-          }
-        ])
+      _c("b-pagination", {
+        attrs: {
+          "total-rows": _vm.pagination.total,
+          "per-page": _vm.pagination.per_page,
+          "aria-controls": "module",
+          align: "fill"
+        },
+        model: {
+          value: _vm.pagination.current_page,
+          callback: function($$v) {
+            _vm.$set(_vm.pagination, "current_page", $$v)
+          },
+          expression: "pagination.current_page"
+        }
       })
     ],
     1

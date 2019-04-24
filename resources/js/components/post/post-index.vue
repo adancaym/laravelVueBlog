@@ -1,9 +1,12 @@
 <template>
     <b-container>
-        <h3>
-            holi soy el index post
-        </h3>
-        <b-table striped hover small :items="items">
+        <b-table
+                striped hover small
+                :items="pagination.data"
+                :fields="fields"
+                v-if="!editMode"
+                id="module"
+        >
             <template slot="actions" slot-scope="row">
                 <table-actions
                 @edit="edit"
@@ -12,6 +15,13 @@
                 ></table-actions>
             </template>
         </b-table>
+        <b-pagination
+                v-model="pagination.current_page"
+                :total-rows="pagination.total"
+                :per-page="pagination.per_page"
+                aria-controls="module"
+                align="fill"
+        ></b-pagination>
     </b-container>
 </template>
 
@@ -23,22 +33,33 @@
         },
         data(){
             return {
-                items:[],
+                editMode:false,
+                pagination:[],
+                fields:[
+                    { key: 'title', label: 'Título' },
+                    { key: 'contents', label: 'Contenido' },
+                    { key: 'actions', label: 'Accciones' },
+                ],
             }
         },
         mounted() {
-            axios.get(this.module).then((response)=>{
-                this.items = response.data.data;
-                this.items.forEach((item)=>{
-                    item.actions = '';
-                })
-            });
+            this.getItems();
         },methods:{
             edit(id){
+                this.editMode = true;
                 console.log(id)
             },
             destroy(id){
-                console.log(id)
+                console.log(id);
+                this.getItems();
+            },
+            save(){
+                this.editMode = false;
+            },
+            getItems(){
+                axios.get(this.module).then((response)=>{
+                    this.pagination = response.data;
+                });
             }
         }
     }
