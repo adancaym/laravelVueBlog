@@ -1,27 +1,16 @@
+
 <template>
     <b-container>
-        <b-table
-                striped hover small
-                :items="pagination.data"
-                :fields="fields"
-                v-if="!editMode"
-                id="module"
-        >
+        <b-table small striped hover dark :items="items" :fields="fields" :current-page="current_page" :per-page="per_page" >
             <template slot="actions" slot-scope="row">
                 <table-actions
-                @edit="edit"
-                @destroy="destroy"
-                :item="row.item"
+                        @edit="edit"
+                        @destroy="destroy"
+                        :item="row.item"
                 ></table-actions>
             </template>
         </b-table>
-        <b-pagination
-                v-model="pagination.current_page"
-                :total-rows="pagination.total"
-                :per-page="pagination.per_page"
-                aria-controls="module"
-                align="fill"
-        ></b-pagination>
+        <b-pagination :total-rows="items.length" :per-page="per_page" v-model="current_page" />
     </b-container>
 </template>
 
@@ -34,31 +23,30 @@
         data(){
             return {
                 editMode:false,
-                pagination:[],
-                fields:[
-                    { key: 'title', label: 'Título' },
-                    { key: 'contents', label: 'Contenido' },
-                    { key: 'actions', label: 'Accciones' },
-                ],
+                items:[],
+                per_page:10,
+                current_page:1,
+                fields:[],
             }
         },
         mounted() {
             this.getItems();
         },methods:{
-            edit(id){
+            edit(item){
                 this.editMode = true;
-                console.log(id)
+                this.$emit('edit',item);
             },
-            destroy(id){
-                console.log(id);
-                this.getItems();
+            destroy(item){
+                this.$emit('destroy',item);
             },
             save(){
                 this.editMode = false;
+
             },
             getItems(){
                 axios.get(this.module).then((response)=>{
-                    this.pagination = response.data;
+                    this.items = response.data.items;
+                    this.fields = response.data.fields;
                 });
             }
         }

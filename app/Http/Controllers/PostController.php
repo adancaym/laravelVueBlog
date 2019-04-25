@@ -14,9 +14,15 @@ class PostController extends Controller
      */
     public function index()
     {
-        $model = new Post();
-        $entidades =  $model->orderBy('id','desc')->paginate(10);
-        return response()->json($entidades);
+        $entidades =  Post::all();
+        $fields=[
+                    array('key'=>'title', 'label'=> 'Título' ),
+                    array('key'=>'contents', 'label'=> 'Contenido' ),
+                    array('key'=>'actions', 'label'=> 'Accciones' ),
+                ];
+        $params['items'] = $entidades;
+        $params['fields'] = $fields;
+        return response()->json($params);
     }
 
     /**
