@@ -7,6 +7,16 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
+    public function __construct()
+    {
+        $this->fields =  array(
+            array('key'=>'title', 'label'=> 'Título' ),
+            array('key'=>'contents', 'label'=> 'Contenido' ),
+            array('key'=>'actions', 'label'=> 'Accciones' ),
+        );
+
+        $this->namePage = 'Noticias';
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,12 @@ class NewsController extends Controller
      */
     public function index()
     {
-        //
+        $entidades =  News::all();
+        $fields= $this->getFields();
+        $params['items'] = $entidades;
+        $params['fields'] = $fields;
+        $params['name'] = $this->getNamePage();
+        return response()->json($params);
     }
 
     /**

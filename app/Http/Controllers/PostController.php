@@ -7,6 +7,24 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->fields =  array(
+            array('key'=>'title', 'label'=> 'Título' ),
+            array('key'=>'contents', 'label'=> 'Contenido' ),
+            array('key'=>'created_at', 'label'=> 'Fecha de publicación' ),
+            array('key'=>'updated_at', 'label'=> 'Fecha de modificación' ),
+            array('key'=>'actions', 'label'=> 'Accciones' ),
+        );
+
+        $this->filters =  array(
+            'title'=>'',
+            'contents'=>'',
+        );
+
+        $this->namePage = 'Entradas en el blog';
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,13 +33,14 @@ class PostController extends Controller
     public function index()
     {
         $entidades =  Post::all();
-        $fields=[
-                    array('key'=>'title', 'label'=> 'Título' ),
-                    array('key'=>'contents', 'label'=> 'Contenido' ),
-                    array('key'=>'actions', 'label'=> 'Accciones' ),
-                ];
+        $fields= $this->getFields();
+        $filters= $this->getFilters();
+
         $params['items'] = $entidades;
         $params['fields'] = $fields;
+        $params['filters'] = $filters;
+        $params['name'] = $this->getNamePage();
+
         return response()->json($params);
     }
 
@@ -89,5 +108,13 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+
+    /**
+     * @return array
+     */
+    public function getFields(): array
+    {
+        return $this->fields;
     }
 }

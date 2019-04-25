@@ -1823,10 +1823,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/new/new-index.vue?vue&type=script&lang=js&":
-/*!************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/new/new-index.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/common/table-pagination.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/common/table-pagination.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1844,20 +1844,120 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['module'],
-  name: "new-index",
+  name: "table-pagination",
+  component: {},
   data: function data() {
     return {
-      items: []
+      editMode: false,
+      items: [],
+      per_page: 10,
+      current_page: 1,
+      fields: [],
+      name: '',
+      loading: true,
+      filters: []
     };
   },
   mounted: function mounted() {
-    var _this = this;
+    this.getItems();
+  },
+  methods: {
+    edit: function edit(item) {
+      this.$emit('edit', item);
+    },
+    destroy: function destroy(item) {
+      this.$emit('destroy', item);
+    },
+    save: function save(item) {
+      this.$emit('destroy', item);
+    },
+    getItems: function getItems() {
+      var _this = this;
 
-    axios.get(this.module).then(function (response) {
-      _this.items = response.data.data;
-    });
+      axios.get(this.module).then(function (response) {
+        _this.items = response.data.items;
+        _this.fields = response.data.fields;
+        _this.name = response.data.name;
+        _this.filters = response.data.filters;
+        _this.loading = false;
+      });
+    }
+  },
+  computed: {
+    filtered: function filtered() {
+      var _this2 = this;
+
+      var filtered = this.items.filter(function (item) {
+        return Object.keys(_this2.filters).every(function (key) {
+          return String(item[key]).includes(_this2.filters[key]);
+        });
+      });
+      return filtered.length > 0 ? filtered : [{
+        id: '',
+        issuedBy: '',
+        issuedTo: ''
+      }];
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/new/new-index.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/new/new-index.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['module'],
+  name: "new-index",
+  component: {},
+  mounted: function mounted() {},
+  methods: {
+    edit: function edit(item) {},
+    destroy: function destroy(item) {},
+    save: function save(item) {}
   }
 });
 
@@ -1877,52 +1977,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['module'],
   name: "post-index",
   component: {},
-  data: function data() {
-    return {
-      editMode: false,
-      items: [],
-      per_page: 10,
-      current_page: 1,
-      fields: []
-    };
-  },
-  mounted: function mounted() {
-    this.getItems();
-  },
+  mounted: function mounted() {},
   methods: {
-    edit: function edit(item) {
-      this.editMode = true;
-      this.$emit('edit', item);
-    },
-    destroy: function destroy(item) {
-      this.$emit('destroy', item);
-    },
-    save: function save() {
-      this.editMode = false;
-    },
-    getItems: function getItems() {
-      var _this = this;
-
-      axios.get(this.module).then(function (response) {
-        _this.items = response.data.items;
-        _this.fields = response.data.fields;
-      });
-    }
+    edit: function edit(item) {},
+    destroy: function destroy(item) {},
+    save: function save(item) {}
   }
 });
 
@@ -65690,6 +65753,154 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/common/table-pagination.vue?vue&type=template&id=463b50bc&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/common/table-pagination.vue?vue&type=template&id=463b50bc&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("b-container", [
+    _c("h3", [_vm._v("\n        " + _vm._s(_vm.name) + "\n    ")]),
+    _vm._v(" "),
+    _vm.items.length > 0
+      ? _c(
+          "div",
+          [
+            _c("b-table", {
+              attrs: {
+                small: "",
+                striped: "",
+                hover: "",
+                items: _vm.filtered,
+                fields: _vm.fields,
+                "current-page": _vm.current_page,
+                "per-page": _vm.per_page
+              },
+              scopedSlots: _vm._u(
+                [
+                  {
+                    key: "top-row",
+                    fn: function(ref) {
+                      var fields = ref.fields
+                      return _vm._l(fields, function(field) {
+                        return _c(
+                          "td",
+                          { key: field.key },
+                          [
+                            field.key in _vm.filters
+                              ? _c("b-input", {
+                                  attrs: { placeholder: field.label },
+                                  model: {
+                                    value: _vm.filters[field.key],
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.filters, field.key, $$v)
+                                    },
+                                    expression: "filters[field.key]"
+                                  }
+                                })
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      })
+                    }
+                  },
+                  {
+                    key: "actions",
+                    fn: function(row) {
+                      return [
+                        _c("table-actions", {
+                          attrs: { item: row.item },
+                          on: { edit: _vm.edit, destroy: _vm.destroy }
+                        })
+                      ]
+                    }
+                  }
+                ],
+                null,
+                false,
+                2500445039
+              )
+            }),
+            _vm._v(" "),
+            _c("b-row", [
+              _c(
+                "div",
+                { staticClass: "col-6 text-left" },
+                [
+                  _c("b-button", { attrs: { variant: "primary" } }, [
+                    _vm._v("Total mostrados: " + _vm._s(_vm.filtered.length))
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-6 text-right" },
+                [
+                  _c("b-pagination", {
+                    attrs: {
+                      "total-rows": _vm.filtered.length,
+                      "per-page": _vm.per_page,
+                      align: "right"
+                    },
+                    model: {
+                      value: _vm.current_page,
+                      callback: function($$v) {
+                        _vm.current_page = $$v
+                      },
+                      expression: "current_page"
+                    }
+                  })
+                ],
+                1
+              )
+            ])
+          ],
+          1
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.items.length === 0 && !_vm.loading
+      ? _c(
+          "div",
+          { staticClass: "alert alert-danger", attrs: { variant: "danger" } },
+          [_vm._v("\n        No existen registros!\n    ")]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.loading
+      ? _c(
+          "div",
+          { staticClass: "text-center" },
+          [
+            _c("b-spinner", {
+              staticStyle: { width: "50rem", height: "50rem" },
+              attrs: { variant: "light", type: "grow" }
+            })
+          ],
+          1
+        )
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/new/new-index.vue?vue&type=template&id=669fa57b&scoped=true&":
 /*!****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/new/new-index.vue?vue&type=template&id=669fa57b&scoped=true& ***!
@@ -65705,21 +65916,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "b-container",
-    [
-      _c("h3", [_vm._v("\n        holi soy el index noticias\n    ")]),
-      _vm._v(" "),
-      _vm.items.length == 0
-        ? _c("h3", [_vm._v("\n        Lo siento no tenemos resultados\n    ")])
-        : _vm._e(),
-      _vm._v(" "),
-      _c("b-table", {
-        attrs: { striped: "", hover: "", small: "", items: _vm.items }
-      })
-    ],
-    1
-  )
+  return _c("table-pagination", { attrs: { module: _vm.module } })
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -65743,48 +65940,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "b-container",
-    [
-      _c("b-table", {
-        attrs: {
-          small: "",
-          striped: "",
-          hover: "",
-          dark: "",
-          items: _vm.items,
-          fields: _vm.fields,
-          "current-page": _vm.current_page,
-          "per-page": _vm.per_page
-        },
-        scopedSlots: _vm._u([
-          {
-            key: "actions",
-            fn: function(row) {
-              return [
-                _c("table-actions", {
-                  attrs: { item: row.item },
-                  on: { edit: _vm.edit, destroy: _vm.destroy }
-                })
-              ]
-            }
-          }
-        ])
-      }),
-      _vm._v(" "),
-      _c("b-pagination", {
-        attrs: { "total-rows": _vm.items.length, "per-page": _vm.per_page },
-        model: {
-          value: _vm.current_page,
-          callback: function($$v) {
-            _vm.current_page = $$v
-          },
-          expression: "current_page"
-        }
-      })
-    ],
-    1
-  )
+  return _c("table-pagination", { attrs: { module: _vm.module } })
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -77972,6 +78128,7 @@ Vue.component('post-index', __webpack_require__(/*! ./components/post/post-index
 /*___________________________________Common___________________________________*/
 
 Vue.component('table-actions', __webpack_require__(/*! ./components/common/table-actions */ "./resources/js/components/common/table-actions.vue")["default"]);
+Vue.component('table-pagination', __webpack_require__(/*! ./components/common/table-pagination */ "./resources/js/components/common/table-pagination.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -78188,6 +78345,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_table_actions_vue_vue_type_template_id_ab43feb6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_table_actions_vue_vue_type_template_id_ab43feb6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/common/table-pagination.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/common/table-pagination.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _table_pagination_vue_vue_type_template_id_463b50bc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./table-pagination.vue?vue&type=template&id=463b50bc&scoped=true& */ "./resources/js/components/common/table-pagination.vue?vue&type=template&id=463b50bc&scoped=true&");
+/* harmony import */ var _table_pagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./table-pagination.vue?vue&type=script&lang=js& */ "./resources/js/components/common/table-pagination.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _table_pagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _table_pagination_vue_vue_type_template_id_463b50bc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _table_pagination_vue_vue_type_template_id_463b50bc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "463b50bc",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/common/table-pagination.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/common/table-pagination.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/common/table-pagination.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_table_pagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./table-pagination.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/common/table-pagination.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_table_pagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/common/table-pagination.vue?vue&type=template&id=463b50bc&scoped=true&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/common/table-pagination.vue?vue&type=template&id=463b50bc&scoped=true& ***!
+  \********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_table_pagination_vue_vue_type_template_id_463b50bc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./table-pagination.vue?vue&type=template&id=463b50bc&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/common/table-pagination.vue?vue&type=template&id=463b50bc&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_table_pagination_vue_vue_type_template_id_463b50bc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_table_pagination_vue_vue_type_template_id_463b50bc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

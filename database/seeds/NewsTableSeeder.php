@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class PostTableSeeder extends Seeder
+class NewsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,6 @@ class PostTableSeeder extends Seeder
      */
     public function run()
     {
-        $posts = factory(\App\Post::class, 1000)->create();
-
+        $news = factory(\App\News::class, 1000)->create();
     }
 }

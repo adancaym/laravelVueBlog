@@ -31,6 +31,7 @@ Vue.component('post-index', require('./components/post/post-index').default);
 
 /*___________________________________Common___________________________________*/
 Vue.component('table-actions', require('./components/common/table-actions').default);
+Vue.component('table-pagination', require('./components/common/table-pagination').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
