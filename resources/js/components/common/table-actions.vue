@@ -5,6 +5,7 @@
             <i class="fa fa-edit"></i>
         </b-button>
         <b-button size="sm" class="btn" variant="danger" v-on:click.prevent="destroy">
+
             <i class="fa fa-trash"></i>
         </b-button>
     </b-button-group>
@@ -19,7 +20,9 @@
                 this.$emit('edit',this.item);
             },
             destroy(){
-                this.$emit('destroy',this.item);
+                bootbox.confirm('¿Realmente deseas borrar el elemento?',(result)=>{
+                    if (result) this.$emit('destroy',this.item);
+                });
             }
         }
     }

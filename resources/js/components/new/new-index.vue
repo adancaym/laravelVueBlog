@@ -1,6 +1,18 @@
 
 <template>
-    <table-pagination :module="module"></table-pagination>
+    <new-form
+            v-if="editMode"
+            :item="item"
+            @save="save"
+            @exitEditMode="exitEditMode"
+    />
+    <table-pagination
+            v-else
+            ref="tablePagination"
+            :module="module"
+            @edit="edit"
+            @destroy="destroy"
+    ></table-pagination>
 </template>
 
 <script>
@@ -9,17 +21,12 @@
         name: "new-index",
         component:{
         },
-
+        data(){
+            return Core.clone(Core.crud.dataCrud)
+        },
         mounted() {
-
-        },methods:{
-            edit(item){
-            },
-            destroy(item){
-            },
-            save(item){
-            },
-        }
+        },
+        methods: Core.crud.methodsCrud
     }
 </script>
 

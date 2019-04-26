@@ -11,6 +11,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 
 window.Vue = require('vue');
+window.bootbox = require('bootbox');
 
 Vue.use(BootstrapVue);
 
@@ -26,10 +27,15 @@ Vue.use(BootstrapVue);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+/*___________________________________Noticias___________________________________*/
 Vue.component('new-index', require('./components/new/new-index.vue').default);
+Vue.component('new-form', require('./components/new/new-form').default);
+
+/*___________________________________Post_______________________________________*/
 Vue.component('post-index', require('./components/post/post-index').default);
 
-/*___________________________________Common___________________________________*/
+/*___________________________________Common____________________________________*/
 Vue.component('table-actions', require('./components/common/table-actions').default);
 Vue.component('table-pagination', require('./components/common/table-pagination').default);
 

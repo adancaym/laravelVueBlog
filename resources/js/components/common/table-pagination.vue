@@ -8,11 +8,11 @@
             <b-table  small striped hover :items="filtered" :fields="fields" :current-page="current_page" :per-page="per_page" >
                 <template slot="top-row" slot-scope="{ fields }">
                     <td v-for="field in fields" :key="field.key">
-
                         <b-input v-model="filters[field.key]" v-if="field.key in filters " :placeholder="field.label" />
                     </td>
                 </template>
                 <template slot="actions" slot-scope="row">
+
                     <table-actions
                             @edit="edit"
                             @destroy="destroy"
@@ -48,7 +48,6 @@
         },
         data(){
             return {
-                editMode:false,
                 items:[],
                 per_page:10,
                 current_page:1,
@@ -65,9 +64,7 @@
                 this.$emit('edit',item);
             },
             destroy(item){
-                this.$emit('destroy',item);
-            },
-            save(item){
+                this.loading = true;
                 this.$emit('destroy',item);
             },
             getItems(){
@@ -77,7 +74,7 @@
                     this.name = response.data.name;
                     this.filters = response.data.filters;
                     this.loading = false;
-                });
+                }).catch(Core.processResponse);
             }
         },
         computed: {
@@ -85,12 +82,8 @@
                 const filtered = this.items.filter(item => {
                     return Object.keys(this.filters).every(key =>
                         String(item[key]).includes(this.filters[key]))
-                })
-                return filtered.length > 0 ? filtered : [{
-                    id: '',
-                    issuedBy: '',
-                    issuedTo: ''
-                }]
+                });
+                return filtered.length > 0 ? filtered : [{}];
             }
         }
     }
